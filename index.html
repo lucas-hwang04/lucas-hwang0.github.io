@@ -1,7 +1,545 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucas Hwang - Professional Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #fafafa;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Section */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .student-id {
+            font-size: 1.1rem;
+            color: #6b7280;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: #4b5563;
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        .nav {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            padding: 16px 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #6b7280;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #111827;
+            background: #f3f4f6;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section:nth-child(even) {
+            background: #ffffff;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 48px;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        .section-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-text {
+            font-size: 1.125rem;
+            color: #4b5563;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .skill-category {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .skill-category h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 16px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: #6b7280;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .skill-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .project-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-4px);
+        }
+
+        .project-header {
+            background: #f8fafc;
+            padding: 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .project-type {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .project-content {
+            padding: 24px;
+        }
+
+        .project-description {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Education Section */
+        .education-content {
+            text-align: center;
+        }
+
+        .education-text {
+            font-size: 1.125rem;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 32px;
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .goal-item {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .goal-item h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 8px;
+        }
+
+        .goal-item p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .contact-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 32px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .contact-card p {
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: #111827;
+            color: #d1d5db;
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #374151;
+        }
+
+        .footer p {
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section h2 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 16px;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .container {
+                padding: 0 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 60px 0;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .intro {
+                font-size: 1.125rem;
+            }
+            
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
 <body>
-<h1>Lucas Hwang</h1>
-<p>s1123570</p>
+    <header class="header">
+        <div class="container">
+            <h1>Lucas Hwang</h1>
+            <p class="student-id">Student ID: S1123570</p>
+            <p class="intro">Computer Science Student & Aspiring Web Developer focused on creating efficient, user-centered digital solutions through clean code and modern technologies.</p>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-container">
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-content">
+                <h2>About Me</h2>
+                <p class="about-text">I am a dedicated Computer Science student with a strong foundation in web development and programming principles. My passion lies in creating clean, efficient code and building user-friendly applications that solve real-world problems. I am committed to continuous learning and staying current with industry best practices and emerging technologies.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend Development</h3>
+                    <ul class="skill-list">
+                        <li>HTML5 & CSS3</li>
+                        <li>JavaScript (ES6+)</li>
+                        <li>Responsive Web Design</li>
+                        <li>CSS Grid & Flexbox</li>
+                        <li>Web Accessibility</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Development Tools</h3>
+                    <ul class="skill-list">
+                        <li>Git & Version Control</li>
+                        <li>VS Code</li>
+                        <li>Browser DevTools</li>
+                        <li>Command Line</li>
+                        <li>Code Documentation</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Core Competencies</h3>
+                    <ul class="skill-list">
+                        <li>Problem Solving</li>
+                        <li>Algorithm Design</li>
+                        <li>Code Optimization</li>
+                        <li>Testing & Debugging</li>
+                        <li>UI/UX Principles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-title">Professional Portfolio</div>
+                        <div class="project-type">Web Development</div>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">A clean, responsive portfolio website showcasing technical skills and projects. Built with semantic HTML, modern CSS, and vanilla JavaScript, emphasizing performance and accessibility.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Responsive Design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-title">Academic Web Projects</div>
+                        <div class="project-type">Coursework</div>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">Collection of web development exercises demonstrating proficiency in frontend technologies, including interactive components and responsive layouts following industry standards.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">Web Standards</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-title">Programming Exercises</div>
+                        <div class="project-type">Computer Science</div>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">Various programming assignments focusing on algorithm implementation, data structures, and software development principles with emphasis on code quality and documentation.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Algorithms</span>
+                            <span class="tech-tag">Data Structures</span>
+                            <span class="tech-tag">Clean Code</span>
+                            <span class="tech-tag">Documentation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <div class="container">
+            <div class="section-content">
+                <h2>Education & Career Goals</h2>
+                <div class="education-content">
+                    <p class="education-text">Currently pursuing Computer Science studies with a specialization in web development. My academic focus combines theoretical computer science principles with practical application in modern web technologies.</p>
+                    
+                    <div class="goals-grid">
+                        <div class="goal-item">
+                            <h3>Short-term Goals</h3>
+                            <p>Complete degree with strong foundation in full-stack development</p>
+                        </div>
+                        <div class="goal-item">
+                            <h3>Career Objective</h3>
+                            <p>Secure internship or entry-level position in web development</p>
+                        </div>
+                        <div class="goal-item">
+                            <h3>Long-term Vision</h3>
+                            <p>Become a skilled software engineer contributing to impactful projects</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h3>Student Information</h3>
+                    <p>Student ID: S1123570</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Open To</h3>
+                    <p>Internships, Collaborations, Entry-level Opportunities</p>
+                </div>
+                <div class="contact-card">
+                    <h3>Specialization</h3>
+                    <p>Web Development, Frontend Technologies, UI/UX</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Lucas Hwang. Designed with modern web standards and best practices.</p>
+        </div>
+    </footer>
 </body>
 </html>
