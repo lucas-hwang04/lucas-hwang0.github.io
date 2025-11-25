@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Taiwan Current Time</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #5ee7df 0%, #b490ca 45%, #141e30 100%);
+      color: #ffffff;
+      overflow: hidden;
+    }
+
+    /* Decorative glowing circles */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .circle.c1 {
+      width: 260px;
+      height: 260px;
+      background: #ff9a9e;
+      top: -60px;
+      left: -40px;
+    }
+
+    .circle.c2 {
+      width: 300px;
+      height: 300px;
+      background: #fad0c4;
+      bottom: -120px;
+      right: -60px;
+    }
+
+    .circle.c3 {
+      width: 200px;
+      height: 200px;
+      background: #a1c4fd;
+      bottom: 20px;
+      left: 10%;
+    }
+
+    .clock-card {
+      position: relative;
+      z-index: 1;
+      background: rgba(15, 23, 42, 0.78); /* glass feel */
+      border-radius: 24px;
+      padding: 32px 40px;
+      min-width: 320px;
+      max-width: 460px;
+      box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45),
+        0 0 25px rgba(94, 231, 223, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      backdrop-filter: blur(18px);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.25);
+      border: 1px solid rgba(34, 211, 238, 0.6);
+      color: #e0f2fe;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      70% { transform: scale(1.9); opacity: 0; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+
+    h1 {
+      margin-top: 18px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .subtext {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #cbd5f5;
+      opacity: 0.8;
+    }
+
+    .clock-display {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .time-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    #time {
+      font-size: 52px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-shadow:
+        0 0 8px rgba(56, 189, 248, 0.8),
+        0 0 18px rgba(59, 130, 246, 0.7);
+    }
+
+    #seconds {
+      font-size: 26px;
+      font-weight: 400;
+      opacity: 0.85;
+    }
+
+    #ampm {
+      font-size: 14px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.4);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    #date {
+      text-align: center;
+      font-size: 15px;
+      color: #e2e8f0;
+    }
+
+    #weekday {
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #a5b4fc;
+    }
+
+    .footer {
+      margin-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #94a3b8;
+      opacity: 0.9;
+    }
+
+    .tz-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.8);
+      font-size: 11px;
+    }
+
+    @media (max-width: 480px) {
+      .clock-card {
+        padding: 24px 20px;
+        margin: 0 16px;
+      }
+      #time {
+        font-size: 40px;
+      }
+      #seconds {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative blobs -->
+  <div class="circle c1"></div>
+  <div class="circle c2"></div>
+  <div class="circle c3"></div>
+
+  <!-- Main clock card -->
+  <div class="clock-card">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      LIVE • TAIWAN TIME
+    </div>
+
+    <h1>Current Time in Taiwan</h1>
+    <p class="subtext">Asia/Taipei • GMT+8</p>
+
+    <div class="clock-display">
+      <div id="weekday">Loading...</div>
+      <div id="date">Loading date...</div>
+
+      <div class="time-row">
+        <!-- HH:MM -->
+        <div id="time">--:--</div>
+        <!-- seconds -->
+        <div id="seconds">--</div>
+        <!-- AM / PM -->
+        <div id="ampm">--</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Localised with JavaScript</div>
+      <div class="tz-tag">Time zone: Asia/Taipei</div>
+    </div>
+  </div>
+
+  <script>
+    function updateTaiwanTime() {
+      const now = new Date();
+
+      // Options for Taiwan time
+      const options = {
+        timeZone: "Asia/Taipei",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour12: true
+      };
+
+      // Use Intl.DateTimeFormat for all fields
+      const formatter = new Intl.DateTimeFormat("en-US", options);
+      const parts = formatter.formatToParts(now);
+
+      let hour = parts.find(p => p.type === "hour").value;
+      let minute = parts.find(p => p.type === "minute").value;
+      let second = parts.find(p => p.type === "second").value;
+      let day = parts.find(p => p.type === "day").value;
+      let month = parts.find(p => p.type === "month").value;
+      let year = parts.find(p => p.type === "year").value;
+      let ampm = parts.find(p => p.type === "dayPeriod").value.toUpperCase();
+
+      // Weekday name in Taiwan time
+      const weekday = now.toLocaleDateString("en-US", {
+        weekday: "long",
+        timeZone: "Asia/Taipei"
+      });
+
+      document.getElementById("weekday").textContent = weekday;
+      document.getElementById("date").textContent = `${year}-${month}-${day}`;
+      document.getElementById("time").textContent = `${hour}:${minute}`;
+      document.getElementById("seconds").textContent = second;
+      document.getElementById("ampm").textContent = ampm;
+    }
+
+    updateTaiwanTime();
+    setInterval(updateTaiwanTime, 1000);
+  </script>
+</body>
+</html>
