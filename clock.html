@@ -16,24 +16,33 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at top, #5ee7df 0%, #b490ca 45%, #141e30 100%);
+      background: linear-gradient(120deg, #5ee7df, #b490ca, #141e30);
+      background-size: 200% 200%;
+      animation: gradientMove 10s ease infinite;
       color: white;
       overflow: hidden;
+      position: relative;
     }
 
-    /* Glowing background circles */
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Background blobs */
     .circle {
       position: absolute;
       border-radius: 50%;
       filter: blur(45px);
-      opacity: 0.7;
+      opacity: 0.55;
       pointer-events: none;
       z-index: 0;
     }
 
     .c1 { width: 350px; height: 350px; background: #ff9a9e; top: -70px; left: -40px; }
     .c2 { width: 420px; height: 420px; background: #a1c4fd; bottom: -110px; right: -80px; }
-    .c3 { width: 240px; height: 240px; background: #fad0c4; top: 40%; left: 10%; }
+    .c3 { width: 260px; height: 260px; background: #fad0c4; top: 40%; left: 8%; }
 
     /* MAIN CLOCK */
     .clock-wrapper {
@@ -49,73 +58,178 @@
     }
 
     #time {
-      font-size: 18vw;
+      font-size: 18vw;   /* huge */
       font-weight: 600;
       letter-spacing: 0.02em;
-      text-shadow: 0 0 18px rgba(255,255,255,0.45);
+      text-shadow:
+        0 0 20px rgba(255,255,255,0.8),
+        0 0 40px rgba(255,255,255,0.5);
       line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    /* subtle breathing animation when birthday mode */
+    body.birthday-active #time {
+      animation: breathe 2s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
     }
 
     #seconds {
       font-size: 6vw;
       margin-left: 1vw;
       opacity: 0.9;
+      text-shadow: 0 0 12px rgba(255,255,255,0.7);
     }
 
     #date {
       margin-top: 1vh;
       font-size: 3vw;
-      opacity: 0.85;
+      opacity: 0.9;
+      text-shadow: 0 0 12px rgba(0,0,0,0.4);
     }
 
     #weekday {
       font-size: 2.4vw;
       letter-spacing: 0.3vw;
       text-transform: uppercase;
-      opacity: 0.8;
+      opacity: 0.85;
       margin-bottom: 1vh;
+      text-shadow: 0 0 10px rgba(0,0,0,0.45);
     }
 
     /* BIRTHDAY MESSAGE */
     #birthdayMessage {
       position: absolute;
       top: 5vh;
-      font-size: 5vw;
-      font-weight: 700;
-      color: #ffe680;
-      text-shadow: 0 0 25px rgba(255,255,150,0.9);
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
       z-index: 5;
+      font-size: 5vw;
+      font-weight: 800;
+      color: #ffe680;
+      text-shadow:
+        0 0 12px rgba(255,255,200,1),
+        0 0 30px rgba(255,255,150,0.9);
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s ease, transform 1s ease;
+      white-space: nowrap;
+    }
+
+    body.birthday-active #birthdayMessage {
+      opacity: 1;
+      transform: scale(1);
+      animation: glowPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%,100% {
+        text-shadow:
+          0 0 12px rgba(255,255,200,1),
+          0 0 30px rgba(255,215,0,0.9);
+      }
+      50% {
+        text-shadow:
+          0 0 24px rgba(255,255,220,1),
+          0 0 50px rgba(255,255,0,1);
+      }
     }
 
     /* CONFETTI */
     .confetti {
       position: fixed;
-      width: 12px;
-      height: 12px;
-      background: red;
-      top: -20px;
-      animation: fall 3s linear infinite;
+      width: 10px;
+      height: 18px;
+      border-radius: 3px;
+      top: -30px;
+      animation: fall 3s linear forwards;
       opacity: 0.9;
+      z-index: 4;
     }
 
     @keyframes fall {
-      0% { transform: translateY(-20px) rotate(0deg); }
-      100% { transform: translateY(110vh) rotate(360deg); }
+      0% {
+        transform: translateY(-30px) rotateZ(0deg) rotateX(0deg);
+      }
+      100% {
+        transform: translateY(110vh) rotateZ(360deg) rotateX(360deg);
+      }
     }
 
+    /* FIREWORKS */
+    .firework {
+      position: fixed;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: 0 0 0 0 #fff;
+      animation: explode 1.2s ease-out forwards;
+      z-index: 4;
+    }
+
+    @keyframes explode {
+      0% {
+        box-shadow:
+          0 0 0 0 rgba(255,255,255,1),
+          0 0 0 0 rgba(255,255,255,1),
+          0 0 0 0 rgba(255,255,255,1),
+          0 0 0 0 rgba(255,255,255,1);
+        opacity: 1;
+      }
+      100% {
+        box-shadow:
+          -20px -40px 0 2px rgba(255,0,102,0.0),
+          25px -30px 0 2px rgba(0,255,255,0.0),
+          -30px 20px 0 2px rgba(255,255,0,0.0),
+          30px 35px 0 2px rgba(0,255,128,0.0);
+        opacity: 0;
+      }
+    }
+
+    /* BALLOONS */
+    .balloon {
+      position: fixed;
+      font-size: 3rem;
+      bottom: -80px;
+      animation: floatUp 7s ease-in forwards;
+      z-index: 3;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) translateX(-30px);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      #time { font-size: 24vw; }
+      #seconds { font-size: 9vw; }
+      #date { font-size: 5vw; }
+      #weekday { font-size: 4vw; }
+      #birthdayMessage { font-size: 7vw; top: 6vh; }
+    }
   </style>
 </head>
 
 <body>
-
+  <!-- Background blobs -->
   <div class="circle c1"></div>
   <div class="circle c2"></div>
   <div class="circle c3"></div>
 
-  <!-- Birthday message -->
-  <div id="birthdayMessage">🎉 HAPPY BIRTHDAY LUCAS! 🎉</div>
+  <!-- Birthday Message -->
+  <div id="birthdayMessage">🎉 HAPPY BIRTHDAY, LUCAS! 🎂🎉</div>
 
   <!-- CLOCK -->
   <div class="clock-wrapper">
@@ -129,24 +243,76 @@
   </div>
 
   <script>
+    // Birthday: 26/11 (recurring every year), in Taiwan time
+    const BIRTHDAY_MONTH = 10;   // 0-based (0=Jan, 10=Nov)
+    const BIRTHDAY_DAY = 26;
+    let birthdayStarted = false;
+    let confettiInterval = null;
+    let fireworksInterval = null;
+    let balloonInterval = null;
+
     function spawnConfetti() {
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 30; i++) {
         const c = document.createElement("div");
         c.classList.add("confetti");
-
         c.style.left = Math.random() * 100 + "vw";
         c.style.backgroundColor = `hsl(${Math.random()*360}, 90%, 60%)`;
-        c.style.animationDuration = (2 + Math.random() * 3) + "s";
-
+        c.style.animationDuration = (2 + Math.random() * 2) + "s";
         document.body.appendChild(c);
-
-        setTimeout(() => c.remove(), 5000);
+        setTimeout(() => c.remove(), 4000);
       }
+    }
+
+    function spawnFirework() {
+      const f = document.createElement("div");
+      f.classList.add("firework");
+      f.style.left = 10 + Math.random() * 80 + "vw";
+      f.style.top = 15 + Math.random() * 40 + "vh";
+      f.style.boxShadow = `
+        -20px -40px 0 3px hsl(${Math.random()*360},100%,65%),
+        25px -30px 0 3px hsl(${Math.random()*360},100%,65%),
+        -30px 20px 0 3px hsl(${Math.random()*360},100%,65%),
+        30px 35px 0 3px hsl(${Math.random()*360},100%,65%)
+      `;
+      document.body.appendChild(f);
+      setTimeout(() => f.remove(), 1500);
+    }
+
+    function spawnBalloon() {
+      const b = document.createElement("div");
+      b.classList.add("balloon");
+      const emojis = ["🎈", "🎉", "🎂", "⭐", "💖"];
+      b.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.animationDuration = (5 + Math.random() * 4) + "s";
+      document.body.appendChild(b);
+      setTimeout(() => b.remove(), 8000);
+    }
+
+    function startBirthdayCelebration() {
+      if (birthdayStarted) return;
+      birthdayStarted = true;
+
+      document.body.classList.add("birthday-active");
+      spawnConfetti();
+      spawnFirework();
+      spawnBalloon();
+
+      confettiInterval = setInterval(spawnConfetti, 1800);
+      fireworksInterval = setInterval(spawnFirework, 1200);
+      balloonInterval = setInterval(spawnBalloon, 1600);
+
+      // optional: stop after 1 minute to avoid infinite craziness
+      setTimeout(() => {
+        clearInterval(confettiInterval);
+        clearInterval(fireworksInterval);
+        clearInterval(balloonInterval);
+      }, 60000);
     }
 
     function updateTaiwanTime() {
       const now = new Date();
-
+      // convert to Taiwan time
       const taiwanNow = new Date(
         now.toLocaleString("en-US", { timeZone: "Asia/Taipei" })
       );
@@ -165,23 +331,21 @@
       document.getElementById("weekday").textContent =
         taiwanNow.toLocaleDateString("en-US", { weekday: "long" });
 
-      /* Birthday Trigger at 00:00 of next day */
-      const birthdayDate = new Date(taiwanNow.getFullYear(), taiwanNow.getMonth(), taiwanNow.getDate() + 1);
+      // Check birthday moment: 26 Nov, 00:00:00 (Taiwan)
+      const isBirthdayDate =
+        taiwanNow.getMonth() === BIRTHDAY_MONTH &&
+        taiwanNow.getDate() === BIRTHDAY_DAY;
 
-      const isBirthdayMoment =
-        hour === "00" && minute === "00" && second === "00" &&
-        taiwanNow.getDate() === birthdayDate.getDate();
+      const isMidnight =
+        hour === "00" && minute === "00" && second === "00";
 
-      if (isBirthdayMoment) {
-        document.getElementById("birthdayMessage").style.opacity = 1;
-        spawnConfetti();
-        setInterval(spawnConfetti, 1200);
+      if (isBirthdayDate && isMidnight && !birthdayStarted) {
+        startBirthdayCelebration();
       }
     }
 
     updateTaiwanTime();
     setInterval(updateTaiwanTime, 1000);
   </script>
-
 </body>
 </html>
